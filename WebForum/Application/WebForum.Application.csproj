@@ -12,4 +12,11 @@
     <ProjectReference Include="..\Domain\WebForum.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UseCase\Category\GetAll\" />
+    <Folder Include="UseCase\Category\Delete\" />
+    <Folder Include="UseCase\Category\Get\" />
+    <Folder Include="UseCase\Category\Save\Handlers\" />
+  </ItemGroup>
+
 </Project>

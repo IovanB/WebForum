@@ -12,6 +12,8 @@ using WebForum.Domain.Entities;
 using WebForum.Infrastructure.Context;
 using VueCliMiddleware;
 using WebForum.WebForumApi.ConfigureService;
+using AutoMapper;
+using WebForum.WebForumApi.Mapping;
 
 namespace WebForum
 {
@@ -28,6 +30,8 @@ namespace WebForum
         public void ConfigureServices(IServiceCollection services)
         {
             ConfigureService.ConfigureDependenciesService(services);
+
+            services.AddAutoMapper(typeof(ResponseProfile));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

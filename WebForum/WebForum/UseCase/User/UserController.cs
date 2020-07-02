@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebForum.Application.Repositories;
 using WebForum.Application.UseCase.User;
 using WebForum.Domain.Validators;
+using WebForum.WebForumApi.Dto;
 
 namespace WebForum.WebForumApi.UseCase.User
 {
@@ -58,7 +59,8 @@ namespace WebForum.WebForumApi.UseCase.User
                 return BadRequest(validationResult.Errors);
 
             addUserUseCase.Add(user);
-            return new OkObjectResult(user);
+            var UserResponse = new UserDTO(user.Id, user.Name, user.Email);
+            return new OkObjectResult(UserResponse);
         }
         /// <summary>
         /// Login a User

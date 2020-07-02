@@ -1,11 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WebForum.Domain.Validators;
 
 namespace WebForum.Domain.Entities
 {
     [Table("Category")]
-    public class Category
+    public class Category : Entity
     {
         [Key]
         public Guid Id{ get; private set; }
@@ -15,7 +16,8 @@ namespace WebForum.Domain.Entities
         {
             Id = Guid.NewGuid();
             Name = name;
-          
+
+            Validate(this, new CategoryValidator());
         }
         public Category(Guid id)
         {

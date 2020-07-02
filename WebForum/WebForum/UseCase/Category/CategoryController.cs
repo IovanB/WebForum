@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using WebForum.Domain.Validators;
 using WebForum.Application.UseCase.Category;
 using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
+using WebForum.WebForumApi.Dto;
+using System.Collections.Generic;
 
 namespace WebForum.WebForumApi.UseCase.Category
 {
@@ -15,19 +18,22 @@ namespace WebForum.WebForumApi.UseCase.Category
         private readonly IUpdateCategoryUseCase updateCategoryUseCase;
         private readonly IGetAllCategoryUseCase getAllCategoryUseCase;
         private readonly IGetByIdCategoryUseCase getByIdCategoryUseCase;
+        private readonly IMapper _mapper;
 
         public CategoryController(
             IAddCategoryUseCase addCategoryUseCase,
             IRemoveCategoryUseCase removeCategoryUseCase,
             IUpdateCategoryUseCase updateCategoryUseCase,
             IGetAllCategoryUseCase getAllCategoryUseCase,
-            IGetByIdCategoryUseCase getByIdCategoryUseCase)
+            IGetByIdCategoryUseCase getByIdCategoryUseCase,
+            IMapper _mapper)
         {
             this.addCategoryUseCase = addCategoryUseCase;
             this.removeCategoryUseCase = removeCategoryUseCase;
             this.updateCategoryUseCase = updateCategoryUseCase;
             this.getAllCategoryUseCase = getAllCategoryUseCase;
             this.getByIdCategoryUseCase = getByIdCategoryUseCase;
+            _mapper = _mapper;
         }
         /// <summary>
         /// Create a category
@@ -43,13 +49,17 @@ namespace WebForum.WebForumApi.UseCase.Category
         {
             var category = new Domain.Entities.Category(name);
 
-            var validationResult = new CategoryValidator().Validate(category);
+            //var validationResult = new CategoryValidator().Validate(category);
 
-            if (!validationResult.IsValid)
-                return BadRequest(validationResult.Errors);
+            //if (!validationResult.IsValid)
+            //    return BadRequest(validationResult.Errors);
 
             addCategoryUseCase.Add(category);
-            return new OkObjectResult(category);
+
+          // var categoryResponse = _mapper.Map<CategoryDTO>(category);
+           var categoryResponse = new CategoryDTO(category.Id,
+           category.Name);
+            return new OkObjectResult(categoryResponse);
         }
 
         /// <summary>
